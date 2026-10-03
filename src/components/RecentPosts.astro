@@ -1,17 +1,15 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-const posts = (await getCollection('blog'))
+const recentPosts = (await getCollection("blog"))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
+	.slice(0, 5);
 ---
 
 <ol>
-	{
-		posts.map((post) => (
-			<li>
-				<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-			</li>
-		))
-	}
+	{recentPosts.map((post) => (
+		<li>
+			<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+		</li>
+	))}
 </ol>

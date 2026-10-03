@@ -14,6 +14,14 @@ export default defineConfig({
             name: "Alegreya",
             cssVariable: "--font-alegreya",
             fallbacks: ["serif"],
+            options: {},
+        },
+        {
+            provider: fontProviders.google(),
+            name: "Alegreya SC",
+            cssVariable: "--font-alegreya-sc",
+            fallbacks: ["serif"],
+            options: {},
         },
     ],
 });
