@@ -22,7 +22,7 @@ function handler(event) {
     if (uri.charAt(uri.length - 1) === '/') {
         request.uri = uri + 'index.html';
     } else if (uri.indexOf('.') === -1) {
-        request.uri = uri + 'index.html';
+        request.uri = uri + '/index.html';
     }
 
     return request;
