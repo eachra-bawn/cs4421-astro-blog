@@ -17,9 +17,14 @@ export class StaticSiteStack extends cdk.Stack {
             code: cloudfront.FunctionCode.fromInline(`
 function handler(event) {
     var request = event.request;
-    if (request.uri.endsWith("/")) {
-        request.uri += "index.html";
+    var uri = request.uri;
+
+    if (uri.charAt(uri.length - 1) === '/') {
+        request.uri = uri + 'index.html';
+    } else if (uri.indexOf('.') === -1) {
+        request.uri = uri + 'index.html';
     }
+
     return request;
 }
 `),
