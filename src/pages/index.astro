@@ -19,10 +19,36 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 				<br />
 				studying @ University of Limerick
 			</h1>
-			<hr />
+			<p>
+				Hi! I'm a first-year student in <a href="https://software-engineering.ie/">ISE</a>.
+				<br />I enjoy making thing that run fast, look aesthetic, and serves users!.
+			</p>
+			<!-- <hr /> -->
 			<h3>Most recent blog posts:</h3>
 			<RecentPosts />
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		padding: 20px 10px;
+	}
+	h1 {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+
+	h3 {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+	p a {
+		text-decoration: underline;
+	}
+	p {
+		color: rgb(var(--black));
+		margin-bottom: 40px;
+	}
+</style>

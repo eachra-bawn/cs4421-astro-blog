@@ -6,33 +6,28 @@ const today = new Date();
 	&copy; {today.getFullYear()} Oisín Mulhall.
 	<nav class="social-links" aria-label="Social links">
 		<a href="/rss.xml" aria-label="RSS feed">
-			<svg viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
-				<circle cx="5" cy="19" r="2" fill="currentColor" />
-				<path
-					d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2.5"
-				/>
-			</svg>
+			<p>RSS</p>
 		</a>
 	</nav>
 </footer>
 <style>
 	footer {
+		font-family: monospace;
+		font-size: 16px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5em;
 		padding: 2em 1em 2em 1em;
-		/*background: linear-gradient(var(--gray-gradient)) no-repeat;*/
 		color: rgb(var(--black));
+
 		text-align: center;
 	}
 	.social-links {
 		display: flex;
 		justify-content: center;
 		gap: 1em;
+		padding: 2rem;
 		margin-top: 0;
 	}
 	.social-links a {
@@ -45,7 +40,7 @@ const today = new Date();
 		color: rgb(var(--gray-dark));
 	}
 	.social-links svg {
-		display: block;
-		color: #000;
+		width: 75%;
+		/*color: #000;*/
 	}
 </style>
