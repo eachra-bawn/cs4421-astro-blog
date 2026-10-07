@@ -1,29 +1,19 @@
 ---
-import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
+import {} from "astro:assets";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-	author: CollectionEntry<'authors'>['data'];
+	author: CollectionEntry<"authors">["data"];
 }
 
 const { author } = Astro.props;
 ---
 
 <aside class="author-bio" aria-labelledby="author-heading">
-	<Image class="avatar" src={author.avatar} alt={`Portrait of ${author.name}`} width={96} height={96} />
 	<div class="author-details">
 		<p class="eyebrow">About the author</p>
 		<h2 id="author-heading">{author.name}</h2>
 		<p>{author.bio}</p>
-		{author.socials.length > 0 && (
-			<nav class="social-links" aria-label={`${author.name}'s social links`}>
-				{author.socials.map((social) => (
-					<a href={social.url} target="_blank" rel="noreferrer">
-						{social.label}
-					</a>
-				))}
-			</nav>
-		)}
 	</div>
 </aside>
 
