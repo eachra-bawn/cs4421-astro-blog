@@ -32,16 +32,13 @@ import HeaderLink from "./HeaderLink.astro";
 		padding: 0 1em;
 		background: white;
 	}
-
 	h2 {
 		margin: 0;
 		font-size: 1em;
 	}
-
 	nav > span {
 		align-self: center;
 	}
-
 	nav {
 		display: grid;
 		grid-template-columns: 1fr auto 1fr;
@@ -52,33 +49,30 @@ import HeaderLink from "./HeaderLink.astro";
 		align-items: center;
 		justify-self: end;
 	}
-	nav a {
-		padding: 0.5em 0.5em;
-		color: rgb(var(--black));
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
+	svg:hover,
+	nav > a:last-child:hover svg {
+		animation: shake 0.1s infinite;
 	}
-	nav a.active {
-		text-decoration: rgb(var(--gray)) wavy underline 1px;
-		color: rgb(var(--black));
+	@keyframes shake {
+		0% {
+			transform: translate(0, 0) rotate(0deg);
+		}
+		20% {
+			transform: translate(-2px, 1px) rotate(-3deg);
+		}
+		40% {
+			transform: translate(2px, -1px) rotate(3deg);
+		}
+		60% {
+			transform: translate(-2px, -1px) rotate(-2deg);
+		}
+		80% {
+			transform: translate(2px, 1px) rotate(2deg);
+		}
+		100% {
+			transform: translate(0, 0) rotate(0deg);
+		}
 	}
-
-	.internal-links {
-		display: flex;
-		align-content: space-between;
-		justify-content: center;
-	}
-
-	.social-links,
-	.social-links a {
-		display: flex;
-		justify-content: center;
-	}
-
-	h2 > a {
-		color: rgb(var(--black));
-	}
-
 	@media (max-width: 720px) {
 		.social-links {
 			display: none;
