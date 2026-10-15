@@ -30,5 +30,19 @@ export default defineConfig({
             fallbacks: ["serif"],
             options: {},
         },
+        {
+            provider: fontProviders.local(),
+            name: "IBM PS/55",
+            cssVariable: "--font-ibm-ps-55",
+            options: {
+                variants: [
+                    {
+                        src: ["./src/assets/fonts/IBM_PS_55.woff"],
+                        weight: "normal",
+                        style: "normal",
+                    },
+                ],
+            },
+        },
     ],
 });
