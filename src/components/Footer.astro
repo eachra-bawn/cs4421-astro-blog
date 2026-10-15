@@ -3,25 +3,201 @@ const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} Oisín Mulhall.
-	<nav class="social-links" aria-label="Social links">
-		<a href="/rss.xml" aria-label="RSS feed">
-			<p>RSS</p>
-		</a>
-	</nav>
+	<div class="footer-content">
+		&copy; {today.getFullYear()} Oisín Mulhall.
+		<nav class="social-links" aria-label="Social links">
+			<a href="/rss.xml" aria-label="RSS feed">
+				<p>RSS</p>
+			</a>
+		</nav>
+	</div>
 </footer>
+
+<script>
+	const footer = document.querySelector("footer");
+	if (footer) {
+		const target = (footer.querySelector(".footer-content") as HTMLElement) || footer;
+
+		interface ShakeFrame {
+			t: number;
+			x: number;
+		}
+
+		// Subtle horizontal shake derived from Header.astro @keyframes shake
+		const SHAKE_FRAMES: ShakeFrame[] = [
+			{ t: 0.0, x: 0 },
+			{ t: 0.2, x: -1.5 },
+			{ t: 0.4, x: 1.5 },
+			{ t: 0.6, x: -1.5 },
+			{ t: 0.8, x: 1.5 },
+			{ t: 1.0, x: 0 },
+		];
+
+		const CYCLE_DURATION = 200; // ms, matches 0.1s in Header.astro
+		let rafId: number | null = null;
+		let wheelOverscroll = 0;
+
+		const getMaxScroll = (): number => {
+			const doc = document.documentElement;
+			const scrollHeight = Math.max(
+				document.body.scrollHeight,
+				doc.scrollHeight,
+				document.body.offsetHeight,
+				doc.offsetHeight,
+				document.body.clientHeight,
+				doc.clientHeight,
+			);
+			return Math.max(0, scrollHeight - window.innerHeight);
+		};
+
+		const getScrollPastBottom = (): number => {
+			const maxScroll = getMaxScroll();
+			const currentScroll =
+				window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+			return Math.max(0, currentScroll - maxScroll);
+		};
+
+		const getInterpolatedX = (progress: number, intensity: number): number => {
+			for (let i = 0; i < SHAKE_FRAMES.length - 1; i++) {
+				const k1 = SHAKE_FRAMES[i];
+				const k2 = SHAKE_FRAMES[i + 1];
+				if (progress >= k1.t && progress <= k2.t) {
+					const ratio = (progress - k1.t) / (k2.t - k1.t);
+					return (k1.x + (k2.x - k1.x) * ratio) * intensity;
+				}
+			}
+			return 0;
+		};
+
+		const tick = (timestamp: DOMHighResTimeStamp): void => {
+			const scrollPast = getScrollPastBottom();
+			const overscroll = Math.max(scrollPast, wheelOverscroll);
+
+			if (overscroll > 0) {
+				// Subtle shake intensity proportional to overscroll distance
+				const intensity = Math.min(overscroll / 60, 2.0);
+				const progress = (timestamp % CYCLE_DURATION) / CYCLE_DURATION;
+				const x = getInterpolatedX(progress, intensity);
+
+				target.style.transform = `translateX(${x.toFixed(2)}px)`;
+
+				// Decay simulated wheel/touch overscroll if not natively rubber-banding
+				if (wheelOverscroll > 0) {
+					wheelOverscroll *= 0.92;
+					if (wheelOverscroll < 0.5) {
+						wheelOverscroll = 0;
+					}
+				}
+
+				rafId = requestAnimationFrame(tick);
+			} else {
+				target.style.transform = "";
+				rafId = null;
+			}
+		};
+
+		const ensureAnimationRunning = (): void => {
+			if (rafId === null) {
+				rafId = requestAnimationFrame(tick);
+			}
+		};
+
+		const updateOverscroll = (): void => {
+			const maxScroll = getMaxScroll();
+			const currentScroll =
+				window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+
+			// If user scrolled back up from bottom, reset wheel overscroll
+			if (currentScroll < maxScroll - 2) {
+				wheelOverscroll = 0;
+			}
+
+			const overscroll = Math.max(getScrollPastBottom(), wheelOverscroll);
+			if (overscroll > 0) {
+				ensureAnimationRunning();
+			} else if (rafId === null && target.style.transform) {
+				target.style.transform = "";
+			}
+		};
+
+		window.addEventListener("scroll", updateOverscroll, { passive: true });
+		window.addEventListener("resize", updateOverscroll, { passive: true });
+
+		window.addEventListener(
+			"wheel",
+			(e: WheelEvent) => {
+				const maxScroll = getMaxScroll();
+				const currentScroll =
+					window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+
+				// Accumulate overscroll when user scrolls down at or beyond the bottom
+				if (currentScroll >= maxScroll - 2 && e.deltaY > 0) {
+					wheelOverscroll = Math.min(wheelOverscroll + e.deltaY * 0.8, 80);
+					ensureAnimationRunning();
+				} else if (e.deltaY < 0) {
+					wheelOverscroll = Math.max(0, wheelOverscroll + e.deltaY);
+				}
+			},
+			{ passive: true },
+		);
+
+		let touchStartY = 0;
+		window.addEventListener(
+			"touchstart",
+			(e: TouchEvent) => {
+				if (e.touches.length > 0) {
+					touchStartY = e.touches[0].clientY;
+				}
+			},
+			{ passive: true },
+		);
+
+		window.addEventListener(
+			"touchmove",
+			(e: TouchEvent) => {
+				if (e.touches.length === 0) return;
+				const touchY = e.touches[0].clientY;
+				const deltaY = touchStartY - touchY;
+				const maxScroll = getMaxScroll();
+				const currentScroll =
+					window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+
+				if (currentScroll >= maxScroll - 2 && deltaY > 0) {
+					wheelOverscroll = Math.min(120, deltaY);
+					ensureAnimationRunning();
+				}
+			},
+			{ passive: true },
+		);
+
+		window.addEventListener(
+			"touchend",
+			() => {
+				// Decays naturally in tick()
+			},
+			{ passive: true },
+		);
+	}
+</script>
+
 <style>
 	footer {
-		font-family: monospace;
-		font-size: 16px;
+		font-family: var(--font-ibm-ps-55);
+		font-size: 18px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 0.5em;
 		padding: 2em 1em 2em 1em;
 		color: rgb(var(--black));
-
 		text-align: center;
+		overflow-x: clip;
+	}
+	.footer-content {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5em;
+		will-change: transform;
 	}
 	.social-links {
 		display: flex;

@@ -8,7 +8,8 @@
     --font-size: 18px;
     --line-height: 2rem;
     --border-thickness: 1.5px;
-    --accent: #a60053;
+    /*--accent: #a60053;*/
+    --accent: 166, 0, 83;
     --accent-dark: #000d8a;
     --black: 15, 18, 25;
     --white: 255, 255, 255;
@@ -93,7 +94,7 @@ a {
 }
 svg:hover,
 a:hover {
-    color: var(--accent);
+    color: rgb(var(--accent));
 }
 p {
     margin-bottom: 1em;
@@ -129,7 +130,7 @@ pre > code {
     all: unset;
 }
 blockquote {
-    border-left: 4px solid var(--accent);
+    border-left: 4px solid rgb(var(--accent));
     padding: 0 0 0 20px;
     margin: 0;
     font-size: 1.333em;
