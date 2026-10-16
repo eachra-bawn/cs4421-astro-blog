@@ -10,5 +10,5 @@ test("Formatted date", async () => {
     });
 
     expect(result).toContain(`<time datetime="${date.toISOString()}">`);
-    expect(result).toContain("Sep 20, 2026");
+    expect(result).toContain("20 Sept 2026");
 });
