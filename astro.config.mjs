@@ -32,12 +32,12 @@ export default defineConfig({
         },
         {
             provider: fontProviders.local(),
-            name: "IBM PS/55",
-            cssVariable: "--font-ibm-ps-55",
+            name: "Twilio Sans Mono",
+            cssVariable: "--font-twilio-sans-mono",
             options: {
                 variants: [
                     {
-                        src: ["./src/assets/fonts/IBM_PS_55.woff"],
+                        src: ["./src/assets/fonts/TwilioSansMono-Regular.woff2"],
                         weight: "normal",
                         style: "normal",
                     },
@@ -45,4 +45,11 @@ export default defineConfig({
             },
         },
     ],
+
+    markdown: {
+        shikiConfig: {
+            theme: "github-light-high-contrast",
+            wrap: true,
+        },
+    },
 });
