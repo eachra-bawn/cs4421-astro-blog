@@ -1,16 +1,62 @@
 ---
-title: 'First post'
-description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jul 08 2022'
-author: 'astro'
+title: 'Building a compiler in OCaml, part 1'
+description: ''
+pubDate: '15 Oct 2026'
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium felis et nunc elementum, non mollis leo dictum. Aliquam venenatis, mauris consequat mattis elementum, ligula diam malesuada est, quis vulputate lectus mi a dolor. Phasellus ornare vel ipsum ut tincidunt. Etiam ultricies est sit amet risus scelerisque suscipit non id nunc. Sed vel volutpat augue. Nunc aliquet mauris eu quam auctor, vitae condimentum neque tempus. Sed et ullamcorper justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In semper, ligula ut dapibus porta, sapien tellus vehicula nibh, at cursus nisl diam sit amet est. In tempor, lorem a consectetur bibendum, purus lectus molestie arcu, non interdum turpis orci nec est. Vestibulum condimentum est nisi. Nullam facilisis varius enim ac sagittis. Donec in ultrices sapien. Vestibulum non risus efficitur, blandit ipsum eu, efficitur risus. Vestibulum sed nisl sem. Proin sollicitudin, lorem ut posuere condimentum, nulla ligula facilisis est, hendrerit feugiat leo nunc gravida eros. Ut semper molestie dolor et pretium. Cras consequat metus massa, sed pharetra risus aliquam vel. Duis cursus efficitur congue. Duis molestie tellus lorem, fermentum vestibulum massa lacinia quis. Morbi dictum ullamcorper nunc, vel fermentum orci pellentesque bibendum.
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+Sed eu libero velit. Sed vel efficitur velit, et rutrum sapien. Suspendisse facilisis hendrerit ligula tincidunt accumsan. Nulla convallis metus non enim vulputate, sit amet porta neque pellentesque. Quisque luctus efficitur mattis. Ut at dapibus metus. Donec commodo libero ipsum, ut consectetur lectus sollicitudin eu.
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+``` ocaml
+let parse_string input =
+  let buff = Lexing.from_string input in
+  let rec print_tokens () =
+    match Lexer.token buff with
+    | Eof -> ()
+    | t ->
+        print_string (Token.tokenise t);
+        print_endline "fkjwelfjwlfjlwj";
+        print_tokens ()
+  in
+  print_tokens ()
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+let parse_file file_name =
+  let file = open_in file_name in
+  let buff = Lexing.from_channel file in
+  let rec print_tokens () =
+    match Lexer.token buff with
+    | Eof -> ()
+    | t ->
+        print_string (Token.tokenise t);
+        print_endline "";
+        print_tokens ()
+  in
+  print_tokens ()
+
+```
+
+``` typescript
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
+
+const blog = defineCollection({
+    // Load Markdown and MDX files in the `src/content/blog/` directory.
+    loader: glob({ base: "./src/content/blog", pattern: "**/*.{md,mdx}" }),
+    // Type-check frontmatter using a schema
+    schema: () =>
+        z.object({
+            title: z.string(),
+            description: z.string(),
+            // Transform string to Date object
+            pubDate: z.coerce.date(),
+            updatedDate: z.coerce.date().optional(),
+        }),
+});
+
+export const collections = { blog };
+
+```

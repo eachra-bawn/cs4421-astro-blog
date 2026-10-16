@@ -5,10 +5,9 @@
  */
 
 :root {
-    --font-size: 18px;
-    --line-height: 2rem;
+    font-size: 19px;
+    --line-height: 1.2rem;
     --border-thickness: 1.5px;
-    /*--accent: #a60053;*/
     --accent: 166, 0, 83;
     --accent-dark: #000d8a;
     --black: 15, 18, 25;
@@ -33,14 +32,13 @@ body {
     word-wrap: break-word;
     overflow-wrap: break-word;
     color: rgb(var(--gray));
-    font-size: 20px;
     line-height: var(--line-height);
 }
 main {
     width: 720px;
     max-width: calc(100% - 2em);
     margin: auto;
-    padding: 3em 1em;
+    padding: 3em 0em;
 }
 h1,
 h2,
@@ -56,7 +54,7 @@ h1 {
     font-size: 2.5rem;
     font-family: var(--font-alegreya-sc);
     letter-spacing: 0.15em;
-    line-height: calc(var(--line-height) * 1.5);
+    line-height: calc(var(--line-height) * 2);
     padding: 1.25rem 0 1.25rem 0;
     /*border-bottom: var(--border-thickness) solid rgb(var(--black));*/
 }
@@ -101,6 +99,9 @@ p {
 }
 .prose p {
     margin-bottom: 2em;
+}
+p + p {
+    text-indent: 3ch;
 }
 textarea {
     width: 100%;
