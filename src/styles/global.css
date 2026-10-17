@@ -37,8 +37,8 @@ body {
 main {
     width: 720px;
     max-width: calc(100% - 2em);
-    margin: auto;
-    padding: 3em 0em;
+    margin: 0 auto;
+    padding: 0 0em;
 }
 h1,
 h2,

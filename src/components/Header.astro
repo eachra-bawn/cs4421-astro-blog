@@ -4,16 +4,12 @@ import HeaderLink from "./HeaderLink.astro";
 ---
 
 <header>
-	<nav>
-		<h2>
+	<span>
+		<h1>
 			<a href="/">{SITE_TITLE}</a>
-		</h2>
-		<span>
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-		</span>
+		</h1>
 		<a href="https://github.com/eachra-bawn" target="_blank">
-			<span class="sr-only">Go to Astro's GitHub repo</span>
+			<span class="sr-only">Go to Oisín Mulhall's GitHub repo</span>
 			<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
 				<path
 					fill="currentColor"
@@ -21,6 +17,12 @@ import HeaderLink from "./HeaderLink.astro";
 				></path>
 			</svg>
 		</a>
+	</span>
+	<nav>
+		<span>
+			<HeaderLink href="/">Home</HeaderLink>
+			<HeaderLink href="/blog">Blog</HeaderLink>
+		</span>
 	</nav>
 </header>
 <style>
@@ -29,30 +31,42 @@ import HeaderLink from "./HeaderLink.astro";
 		font-family: var(--font-alegreya-sc);
 	}
 	header {
-		margin: 1rem 8em 1rem 8em;
+		margin: 1rem 8rem 0 8rem;
 		padding: 0 1em;
 		background: white;
 	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-	nav > span {
-		align-self: center;
-	}
-	nav {
-		display: grid;
-		grid-template-columns: 1fr auto 1fr;
-		align-items: center;
-	}
-	nav > a:last-child {
+	header > span {
 		display: flex;
 		align-items: center;
-		justify-self: end;
+		justify-content: space-between;
+	}
+	h1 {
+		text-align: left;
+		margin: 0 0;
+		padding: 0rem 0;
+		font-size: 1.5rem;
+		font-style: oblique 20deg;
+	}
+	h2 {
+		margin: 0;
+		font-size: 1rem;
+	}
+	nav {
+		display: flex;
+		justify-content: left;
+		align-items: center;
+		margin: 0 auto;
+	}
+	nav > span {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		padding: 0 2rem;
 	}
 	svg:hover,
-	nav > a:last-child:hover svg {
-		animation: shake 0.1s infinite;
+	nav a:has(svg):hover svg {
+		animation: shake 0.2s 1;
 	}
 	@keyframes shake {
 		0% {
@@ -62,7 +76,7 @@ import HeaderLink from "./HeaderLink.astro";
 			transform: translate(-2px, 1px) rotate(-3deg);
 		}
 		40% {
-			transform: translate(2px, -1px) rotate(3deg);
+			transform: translate(2px, -1px) rotate(3deg) scale(2, 0.5);
 		}
 		60% {
 			transform: translate(-2px, -1px) rotate(-2deg);
