@@ -54,9 +54,8 @@ const posts = (await getCollection("blog")).sort(
 				display: block;
 			}
 			.title {
-				margin: 0;
+				margin: var(--line-height * 2) 0rem;
 				color: rgb(var(--black));
-				line-height: 1;
 			}
 			.date {
 				font-size: 16px;
@@ -99,12 +98,6 @@ const posts = (await getCollection("blog")).sort(
 								<p class="date">
 									<FormattedDate date={post.data.pubDate} />
 								</p>
-								<!-- <Image
-									width={400}
-									height={300}
-									src={"./src/assets/images/car.jpg"}
-									alt=""
-								/> -->
 							</a>
 						</li>
 					))}

@@ -19,13 +19,13 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
 		color: rgb(var(--black));
 
 		text-decoration: none;
-		transition: color 0.5s var(--bezier);
+		transition: color 1s var(--bezier);
 		transition: font-size 0.5s var(--bezier);
 	}
 	a.active {
 		font-weight: bolder;
 		color: rgb(var(--accent));
-		font-size: 1.2em;
+		/*font-size: 1.2em;*/
 	}
 	a:hover {
 		color: rgb(var(--accent));
