@@ -47,9 +47,6 @@ export default defineConfig({
     ],
 
     markdown: {
-        shikiConfig: {
-            theme: "github-light-high-contrast",
-            wrap: true,
-        },
+        syntaxHighlight: "prism",
     },
 });

@@ -9,6 +9,7 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 
 <html lang="en">
 	<head>
+		<link href="/code.css" rel="stylesheet" />
 		<BaseHead title={title} description={description} />
 		<style>
 			main {
@@ -62,5 +63,6 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 			</article>
 		</main>
 		<Footer />
+		<script is:inline src="/prism.js"></script>
 	</body>
 </html>
