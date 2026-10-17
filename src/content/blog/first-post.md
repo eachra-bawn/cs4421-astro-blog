@@ -36,6 +36,11 @@ let parse_file file_name =
   in
   print_tokens ()
 
+let () =
+  if 10 > 40
+  then print_endline "are you that silly?"
+  else print_endline "wow... wowwwww.... wow"
+
 ```
 
 ``` typescript

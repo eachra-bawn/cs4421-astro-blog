@@ -22,7 +22,7 @@ pre[class*="language-"] {
 
 /* Code blocks */
 pre[class*="language-"] {
-    background: #fefefe;
+    background: #ffffff;
     padding: 1em;
     margin: 2rem 0;
     overflow: auto;
@@ -32,7 +32,6 @@ pre[class*="language-"] {
     scrollbar-width: none;
 }
 
-/* Inline code */
 :not(pre) > code[class*="language-"] {
     padding: 0.1em;
     border-radius: 0.3em;
@@ -43,6 +42,7 @@ pre[class*="language-"] {
 .token.doctype,
 .token.cdata {
     color: #b6ad9a;
+    font-style: italic;
 }
 
 .token.punctuation {
@@ -53,15 +53,19 @@ pre[class*="language-"] {
     opacity: 0.7;
 }
 
+.token.operator {
+    color: #000000;
+}
+
 .token.tag,
-.token.operator,
 .token.number {
-    color: #063289;
+    color: #a60053;
+    font-weight: 450;
 }
 
 .token.property,
 .token.function {
-    color: #b29762;
+    color: #000000;
 }
 
 .token.tag-id,
@@ -72,7 +76,7 @@ pre[class*="language-"] {
 
 code.language-javascript,
 .token.attr-name {
-    color: #896724;
+    color: #000000;
 }
 
 code.language-css,
