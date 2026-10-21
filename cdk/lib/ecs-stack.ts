@@ -67,7 +67,7 @@ export class EcsStack extends cdk.Stack {
                 healthCheck: {
                     command: [
                         "CMD-SHELL",
-                        "wget --no-verbose --tries=1 --spider http://localhost:4321/api/health/live || exit 1",
+                        "wget --no-verbose --tries=1 --spider http://localhost:4321/api/health || exit 1",
                     ],
                     timeout: cdk.Duration.seconds(3),
                     startPeriod: cdk.Duration.seconds(30),
@@ -85,7 +85,7 @@ export class EcsStack extends cdk.Stack {
         );
 
         service.targetGroup.configureHealthCheck({
-            path: "/api/health/readiness",
+            path: "/api/readiness",
             healthyThresholdCount: 2,
             unhealthyThresholdCount: 3,
         });
