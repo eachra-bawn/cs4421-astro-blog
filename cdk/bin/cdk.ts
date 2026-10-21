@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import * as cdk from "aws-cdk-lib/core";
 import { StaticSiteStack } from "../lib/cdk-stack";
+import { EcrStack } from "../lib/ecs-stack";
 
 const app = new cdk.App();
 new StaticSiteStack(app, "StaticSiteStack", {
@@ -14,4 +15,8 @@ new StaticSiteStack(app, "StaticSiteStack", {
      * want to deploy the stack to. */
     env: { account: "663001881857", region: "us-east-1" },
     /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+});
+
+new EcrStack(app, "EcrStack", {
+    env: { account: "663001881857", region: "us-east-1" },
 });
