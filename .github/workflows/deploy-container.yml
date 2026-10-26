@@ -36,7 +36,9 @@ jobs:
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Deploy CDK stack
+        working-directory: cdk
         run: |
+          npm ci
           npx cdk deploy EcsStack \
             --parameters EcsStack:ImageTag=$IMAGE_TAG \
             --require-approval never
