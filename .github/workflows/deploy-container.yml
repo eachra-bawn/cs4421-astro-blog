@@ -1,13 +1,23 @@
 name: Deploy Container to AWS
 on:
-  pull_request:
+  push:
     branches: [main]
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: ecrstack-astrorepository95765926-hkenwxa7wwmr
+  IMAGE_TAG: ${{ github.sha }}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci && npm run test:unit # 1. Quality Gate
+      - run: npm ci && npm run test:unit
+
+      - name: Install CDK dependencies
+        working-directory: cdk
+        run: npm ci
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -21,10 +31,17 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, Tag & Push Image
+        id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ecrstack-astrorepository95765926-hkenwxa7wwmr
-          IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" .
           docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Deploy CDK stack
+        working-directory: cdk
+        run: |
+          npx cdk deploy EcsStack \
+            --parameters EcsStack:ImageTag=$IMAGE_TAG \
+            --require-approval never
